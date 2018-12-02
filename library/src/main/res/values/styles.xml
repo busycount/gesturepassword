@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GesturePasswordView">
+        <attr name="pointColor" format="color" />
+        <attr name="pointRadius" format="dimension" />
+        <attr name="pointFactor" format="integer" />
+        <attr name="lineColor" format="color" />
+        <attr name="lineWidth" format="dimension" />
+        <attr name="lineColorWrong" format="color" />
+        <attr name="num" format="integer" />
+        <attr name="validLength" format="integer" />
+    </declare-styleable>
+</resources>
