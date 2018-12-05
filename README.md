@@ -27,7 +27,8 @@
 ```java
 protected void onCreate(Bundle savedInstanceState) {
     gesturePasswordView = findViewById(R.id.passwordView);
-    gesturePasswordView.setOnGesturePasswordAction(new OnGesturePasswordAction() {
+    //you can also use OnGesturePasswordListener to implement some method
+    gesturePasswordView.setOnGesturePasswordListener(new IOnGesturePasswordListener() {
         
         @Override
         public void onDrawing() {
