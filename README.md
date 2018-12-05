@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
+        app:autoClearDelay="1500"
         app:lineColor="@color/colorPrimary"
         app:lineColorWrong="@color/colorAccent"
         app:lineWidth="10dp"
@@ -27,8 +28,15 @@
 protected void onCreate(Bundle savedInstanceState) {
     gesturePasswordView = findViewById(R.id.passwordView);
     gesturePasswordView.setOnGesturePasswordAction(new OnGesturePasswordAction() {
+        
+        @Override
+        public void onDrawing() {
+             Toast.makeText(MainActivity.this, "startDraw", Toast.LENGTH_SHORT).show();
+        }
+
         @Override
         public String readPassword() {
+            //if not null,start verify
             return null;
         }
 
@@ -56,10 +64,10 @@ protected void onCreate(Bundle savedInstanceState) {
     });
 }
 
-
-public void redraw(View view) {
-    gesturePasswordView.redraw(false);
-}
+//reset
+gesturePasswordView.redraw(false);
+//start verify
+gesturePasswordView.redraw(true);
 ```
 
 

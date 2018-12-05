@@ -5,15 +5,18 @@ package com.busycount.gesturepassword;
  * <p>
  * 2018/12/2 | Count.C | Created
  */
-public interface OnGesturePasswordAction {
+public interface IOnGesturePasswordListener {
+
+    void onDrawing();
 
     String readPassword();
 
     void onCreateSuccess();
 
-    void onVerifyFailed();
+    void onInvalid();
 
     void onVerifySuccess(String password);
 
-    void onInvalid();
+    void onVerifyFailed();
+
 }

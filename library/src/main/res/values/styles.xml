@@ -9,5 +9,6 @@
         <attr name="lineColorWrong" format="color" />
         <attr name="num" format="integer" />
         <attr name="validLength" format="integer" />
+        <attr name="autoClearDelay" format="integer" />
     </declare-styleable>
 </resources>

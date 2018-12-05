@@ -3,21 +3,31 @@ package com.busycount.gesturepassword.sample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.busycount.gesturepassword.OnGesturePasswordAction;
 import com.busycount.gesturepassword.GesturePasswordView;
+import com.busycount.gesturepassword.IOnGesturePasswordListener;
 
 public class MainActivity extends AppCompatActivity {
 
     private GesturePasswordView gesturePasswordView;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView = findViewById(R.id.textView);
+        textView.setText("绘制手势图案,请至少连接4个点");
         gesturePasswordView = findViewById(R.id.passwordView);
-        gesturePasswordView.setOnGesturePasswordAction(new OnGesturePasswordAction() {
+        gesturePasswordView.setOnGesturePasswordListener(new IOnGesturePasswordListener() {
+
+            @Override
+            public void onDrawing() {
+                textView.setText("完成后松开手指");
+            }
+
             @Override
             public String readPassword() {
                 return null;
@@ -25,23 +35,22 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCreateSuccess() {
-                Toast.makeText(MainActivity.this, "onCreateSuccess", Toast.LENGTH_SHORT).show();
+                textView.setText("再次绘制手势图案进行确认");
             }
 
             @Override
             public void onVerifyFailed() {
-                Toast.makeText(MainActivity.this, "onVerifyFailed", Toast.LENGTH_SHORT).show();
+                textView.setText("输入错误请重试");
             }
 
             @Override
             public void onVerifySuccess(String str) {
-                Toast.makeText(MainActivity.this, "onVerifySuccess " + str, Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(MainActivity.this, "onVerifySuccess " + str, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onInvalid() {
-                Toast.makeText(MainActivity.this, "onInvalid", Toast.LENGTH_SHORT).show();
+                textView.setText("绘制手势图案,请至少连接4个点");
             }
 
         });
@@ -50,9 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void redraw(View view) {
         gesturePasswordView.redraw(false);
+        textView.setText("绘制手势图案,请至少连接4个点");
     }
 
     public void sure(View view) {
-        gesturePasswordView.redraw(true);
+        if (gesturePasswordView.isVerify()) {
+            Toast.makeText(this, "Create success", Toast.LENGTH_SHORT).show();
+        } else {
+            gesturePasswordView.redraw(true);
+        }
+
     }
 }
