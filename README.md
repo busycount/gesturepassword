@@ -31,8 +31,13 @@ protected void onCreate(Bundle savedInstanceState) {
     gesturePasswordView.setOnGesturePasswordListener(new IOnGesturePasswordListener() {
         
         @Override
-        public void onDrawing() {
+        public void onDrawStart() {
              Toast.makeText(MainActivity.this, "startDraw", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onDrawStop() {
+
         }
 
         @Override

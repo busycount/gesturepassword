@@ -7,7 +7,9 @@ package com.busycount.gesturepassword;
  */
 public interface IOnGesturePasswordListener {
 
-    void onDrawing();
+    void onDrawStart();
+
+    void onDrawStop();
 
     String readPassword();
 

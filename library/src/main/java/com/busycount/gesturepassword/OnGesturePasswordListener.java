@@ -6,8 +6,14 @@ package com.busycount.gesturepassword;
  * 2018/12/5 | Count.C | Created
  */
 public abstract class OnGesturePasswordListener implements IOnGesturePasswordListener {
+
     @Override
-    public void onDrawing() {
+    public void onDrawStart() {
+
+    }
+
+    @Override
+    public void onDrawStop() {
 
     }
 

@@ -207,12 +207,8 @@ public class GesturePasswordView extends View {
         if (isSetFinish) {
             return;
         }
-        listUnSelect.clear();
-        listUnSelect.addAll(listSource);
-        listSelect.clear();
-        if (onGesturePasswordListener != null) {
-            onGesturePasswordListener.onDrawing();
-        }
+        clearData();
+        onDrawStart();
     }
 
     private void joinPoint(MotionEvent event, boolean isTouchFinish) {
@@ -232,9 +228,11 @@ public class GesturePasswordView extends View {
         }
         isSetFinish = listSelect.size() == listSource.size() || isTouchFinish;
         if (isSetFinish) {
+            onDrawStop();
             generateAction();
+        } else {
+            invalidate();
         }
-        invalidate();
     }
 
     private void checkAdd(PasswordPoint p) {
@@ -283,8 +281,10 @@ public class GesturePasswordView extends View {
         if (canAdd) {
             for (PasswordPoint pIndex : tempList) {
                 int index = listUnSelect.indexOf(pIndex);
-                listSelect.add(listUnSelect.get(index));
-                listUnSelect.remove(index);
+                if (index != -1) {
+                    listSelect.add(listUnSelect.get(index));
+                    listUnSelect.remove(index);
+                }
             }
         }
     }
@@ -323,18 +323,32 @@ public class GesturePasswordView extends View {
         return builder.toString();
     }
 
+    private void onDrawStart() {
+        if (onGesturePasswordListener != null) {
+            onGesturePasswordListener.onDrawStart();
+        }
+    }
+
+    private void onDrawStop() {
+        if (onGesturePasswordListener != null) {
+            onGesturePasswordListener.onDrawStop();
+        }
+    }
+
     private void readPassword() {
         jointPointStr = onGesturePasswordListener != null ? onGesturePasswordListener.readPassword() : null;
         isVerify = !TextUtils.isEmpty(jointPointStr);
     }
 
     private void onVerifySuccess(String str) {
+        drawSuccess();
         if (onGesturePasswordListener != null) {
             onGesturePasswordListener.onVerifySuccess(str);
         }
     }
 
     private void onCreatedSuccess() {
+        drawSuccess();
         if (onGesturePasswordListener != null) {
             onGesturePasswordListener.onCreateSuccess();
         }
@@ -354,6 +368,10 @@ public class GesturePasswordView extends View {
         }
     }
 
+    private void drawSuccess() {
+        invalidate();
+    }
+
     private void drawError() {
         isWrong = true;
         invalidate();
@@ -368,9 +386,16 @@ public class GesturePasswordView extends View {
     private void clear() {
         isWrong = false;
         isSetFinish = false;
-        listSelect.clear();
+        clearData();
         invalidate();
     }
+
+    private void clearData() {
+        listUnSelect.clear();
+        listUnSelect.addAll(listSource);
+        listSelect.clear();
+    }
+
 
     public void redraw(boolean isVerifyMode) {
         isVerify = isVerifyMode;

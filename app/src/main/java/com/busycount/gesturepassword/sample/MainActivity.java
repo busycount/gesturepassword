@@ -24,8 +24,13 @@ public class MainActivity extends AppCompatActivity {
         gesturePasswordView.setOnGesturePasswordListener(new IOnGesturePasswordListener() {
 
             @Override
-            public void onDrawing() {
+            public void onDrawStart() {
                 textView.setText("完成后松开手指");
+            }
+
+            @Override
+            public void onDrawStop() {
+
             }
 
             @Override
