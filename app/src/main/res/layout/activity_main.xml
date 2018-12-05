@@ -20,11 +20,11 @@
         app:lineColor="@color/colorPrimary"
         app:lineColorWrong="@color/colorAccent"
         app:lineWidth="10dp"
-        app:num="4"
+        app:num="3"
         app:pointColor="@color/colorPrimaryDark"
         app:pointFactor="3"
         app:pointRadius="10dp"
-        app:validLength="6" />
+        />
 
     <Button
         android:layout_width="wrap_content"

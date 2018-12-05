@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public String readPassword() {
-                return null;
+                return "0-1-2-4";
             }
 
             @Override

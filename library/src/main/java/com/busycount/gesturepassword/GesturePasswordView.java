@@ -65,7 +65,6 @@ public class GesturePasswordView extends View {
     private boolean isVerify;
     private boolean isWrong;
     private int autoClearDelay;
-    private int jointPointSize;
     private String jointPointStr;
     private IOnGesturePasswordListener onGesturePasswordListener;
 
@@ -79,6 +78,7 @@ public class GesturePasswordView extends View {
         lineColor = ta.getColor(R.styleable.GesturePasswordView_lineColor, Color.GRAY);
         lineColorWrong = ta.getColor(R.styleable.GesturePasswordView_lineColorWrong, Color.RED);
         num = ta.getInteger(R.styleable.GesturePasswordView_num, 3);
+        num = num > 3 ? num : 3;
         validLength = ta.getInteger(R.styleable.GesturePasswordView_validLength, num + 1);
         autoClearDelay = ta.getInteger(R.styleable.GesturePasswordView_autoClearDelay, 1500);
         ta.recycle();
@@ -290,15 +290,11 @@ public class GesturePasswordView extends View {
     }
 
     private void generateAction() {
-        StringBuilder builder = new StringBuilder();
-        for (PasswordPoint p : listSelect) {
-            builder.append(p.num(num));
-        }
         if (isVerify) {
             if (listSelect.size() < validLength) {
                 onInvalid();
             } else {
-                if (jointPointSize == listSelect.size() && getPointStr().equals(jointPointStr)) {
+                if (getPointStr().equals(jointPointStr)) {
                     onVerifySuccess(jointPointStr);
                 } else {
                     onVerifyFailed();
@@ -308,7 +304,6 @@ public class GesturePasswordView extends View {
             if (listSelect.size() < validLength) {
                 onInvalid();
             } else {
-                jointPointSize = listSelect.size();
                 jointPointStr = getPointStr();
                 onCreatedSuccess();
             }
@@ -318,7 +313,10 @@ public class GesturePasswordView extends View {
     private String getPointStr() {
         StringBuilder builder = new StringBuilder();
         for (PasswordPoint p : listSelect) {
-            builder.append(p.num(num));
+            builder.append(p.num(num)).append("-");
+        }
+        if (builder.length() > 0) {
+            builder.setLength(builder.length() - 1);
         }
         return builder.toString();
     }
